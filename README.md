@@ -1,4 +1,6 @@
-# リアルタイム温湿度モニタリングアプリケーション
+<img width="1907" alt="スクリーンショット 2025-05-01 131120" src="https://github.com/user-attachments/assets/407236a8-9eb6-4307-a61c-17fdf5791905" />
+
+# [リアルタイム温湿度モニタリングアプリケーション](https://d1d1jrdxvypyze.cloudfront.net/)
 
 ## 概要
 このアプリケーションは、IoTデバイス（M5Stack Core2）からAWS IoT Core経由で送信される温度・湿度データをリアルタイムで表示するWebアプリケーションです。AWS AppSyncを使用してGraphQLサブスクリプションを実装し、センサーデータをリアルタイムで受信・表示します。
