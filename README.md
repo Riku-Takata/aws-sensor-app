@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# リアルタイム温湿度モニタリングアプリケーション
 
-## Getting Started
+## 概要
+このアプリケーションは、IoTデバイス（M5Stack Core2）からAWS IoT Core経由で送信される温度・湿度データをリアルタイムで表示するWebアプリケーションです。AWS AppSyncを使用してGraphQLサブスクリプションを実装し、センサーデータをリアルタイムで受信・表示します。
 
-First, run the development server:
+## 技術スタック
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### フロントエンド
+- Next.js 15.3.1
+- React
+- TypeScript
+- Material-UI (MUI)
+
+### AWS サービス
+- AWS Amplify
+- AWS AppSync (GraphQL API)
+- AWS IoT Core
+
+### 開発環境
+- Node.js
+
+## 主な機能
+- IoTデバイスからの温湿度データのリアルタイム受信
+- 温度・湿度データの表形式での表示
+- 接続状態のリアルタイムモニタリング
+- 最新30件のデータ履歴保持
+
+## プロジェクト構造
+```
+my-sensor-app/
+├── components/          # Reactコンポーネント
+│   ├── ConfigureAmplify.tsx  # Amplify設定
+│   └── RealtimeChart.tsx     # データ表示コンポーネント
+├── app/                 # Next.jsページ
+├── public/             # 静的ファイル
+└── package.json        # 依存関係の定義
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## GraphQLスキーマ
+アプリケーションで使用されているGraphQLスキーマの主要な型定義：
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```graphql
+type SensorRecord {
+  thingId: String!
+  ts: AWSDateTime!
+  temperature: Float
+  humidity: Float
+  sentAt: AWSDateTime
+  receivedAt: AWSDateTime
+}
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+type Subscription {
+  onNewRecord(thingId: String!): SensorRecord
+}
+```
 
-## Learn More
+## 注意事項
+- AWS Amplifyの設定が必要です
+- IoTデバイス（M5Stack Core2）のセットアップと設定が別途必要です
+- AWS IoT CoreとAppSyncの適切な設定が必要です
 
-To learn more about Next.js, take a look at the following resources:
+## ライセンス
+MIT
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 作者
+Riku-Takata
